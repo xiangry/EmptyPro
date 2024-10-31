@@ -1,0 +1,30 @@
+*/Library
+client/*.csproj
+*/Temp
+client/*.sln
+*/Debug
+*/FM_Mono
+*/.vs
+*/.vsconfig
+client/obj
+client/Packages/packages-lock.json
+client/.vscode/settings.json
+client/.vscode
+*/.idea
+client/Assets/StreamingAssets/Table/temp/*
+client/NativeProj/iOS/UnityOutput/Classes/Native
+client/NativeProj/iOS/UnityOutput/Data
+client/NativeProj/iOS/UnityOutput/Libraries
+# macos gen file
+.DS_Store
+client/wxMiniGame
+client/MemoryCaptures
+client/NativeProj/iOS/UnityOutput/Pods/Pods.xcodeproj/xcuserdata/
+client/NativeProj/iOS/UnityOutput/Unity-iPhone.xcodeproj/xcuserdata/
+
+# 本地的文件变化缓存不提交
+client/Assets/FR2_Cache.*
+client/Temp_data
+client/Library
+client/Temp
+client/Logs
