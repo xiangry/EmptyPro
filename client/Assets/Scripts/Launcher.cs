@@ -8,34 +8,65 @@ public class Launcher : MonoBehaviour
     public Button toastBtn;
     public Button restartBtn1;
     public Button restartBtn2;
-    public Button restartBtn3;
+    
     // Start is called before the first frame update
     void Start()
     {
-        toastBtn.onClick.AddListener(OnToastMessage);
-        restartBtn1.onClick.AddListener(OnRestartApp);
+        toastBtn.onClick.AddListener(OnReStartBtnClicked);
+        restartBtn1.onClick.AddListener(OnReStart1BtnClicked);
+        restartBtn2.onClick.AddListener(OnReStart2BtnClicked);
     }
 
-    void OnToastMessage()
+    void OnReStartBtnClicked()
     {
-        PlatformNative.NativeTools.ToastMessage("Hello, Unity", 1);
+        Debug.Log("ToastInfo");
+
+#if UNITY_ANDROID
+        // 获取 Unity 的当前 Activity
+        AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+        AndroidJavaObject currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
+
+        // 调用 Java 类中的 showToast 方法
+        using (AndroidJavaClass myClass = new AndroidJavaClass("com.example.mylibrary.MyAndroidClass"))
+        {
+            myClass.CallStatic("ToastMessage", currentActivity, $"From Unity: {Time.realtimeSinceStartup}");
+        }
+#endif
     }
     
     
-    void OnRestartApp()
+    void OnReStart1BtnClicked()
     {
-        PlatformNative.NativeTools.ToastMessage("Will Restart App");
-        PlatformNative.NativeTools.RestartApp(100);
+        Debug.Log("Restart1");
+
+#if UNITY_ANDROID
+        // 获取 Unity 的当前 Activity
+        AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+        AndroidJavaObject currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
+
+        // 调用 Java 类中的 showToast 方法
+        using (AndroidJavaClass myClass = new AndroidJavaClass("com.example.mylibrary.MyAndroidClass"))
+        {
+            myClass.CallStatic("ForceRestart", currentActivity);
+        }
+#endif
     }
     
     
     void OnReStart2BtnClicked()
     {
         Debug.Log("Restart2");
-    }
-    
-    void OnReStart3BtnClicked()
-    {
-        Debug.Log("Restart2");
+
+#if UNITY_ANDROID
+        // 获取 Unity 的当前 Activity
+        AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+        AndroidJavaObject currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
+
+        // 调用 Java 类中的 showToast 方法
+        using (AndroidJavaClass myClass = new AndroidJavaClass("com.example.mylibrary.MyAndroidClass"))
+        {
+            myClass.CallStatic("ForceRestart2", currentActivity);
+        }
+#endif
     }
 }
