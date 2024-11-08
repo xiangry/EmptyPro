@@ -29,3 +29,7 @@ client/Library
 client/Temp
 client/Logs
 **/.idea
+client/NativeProj/Android/Main/.gradle
+client/NativeProj/Android/Main/.gradle
+client/NativeProj/Android/Main/unityLibrary/build
+client/NativeProj/Android/Main/launcher/build
