@@ -2,7 +2,18 @@ apply plugin: 'com.android.application'
 
 dependencies {
     implementation project(':unityLibrary')
-    }
+    implementation 'com.android.billingclient:billing:7.1.1'
+    implementation 'androidx.compose.runtime:runtime-android:1.7.5'
+    implementation 'com.google.android.gms:play-services-analytics-impl:18.2.0'
+
+
+//    设置google依赖
+    def billing_version = "7.0.0"
+    implementation "com.android.billingclient:billing-ktx:$billing_version"
+//    implementation 'com.google.guava:guava:31.1-android'  // list
+}
+
+
 
 android {
     namespace "com.DefaultCompany.EProject"
