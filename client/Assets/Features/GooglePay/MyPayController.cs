@@ -20,16 +20,48 @@ public class MyPayController : MonoBehaviour
         
         
         new BtnInfo() { Title = "Detail:purchased", OnClick = DoTestPurchased },
-        new BtnInfo() { Title = "Detail:canceled", OnClick = DoTestCanceled },
-        new BtnInfo() { Title = "Detail:item_unavailable", OnClick = DoTestItemUnavailable },
-        new BtnInfo() { Title = "Detail:refunded", OnClick = DoTestRefunded },
+        // new BtnInfo() { Title = "Detail:canceled", OnClick = DoTestCanceled },
+        // new BtnInfo() { Title = "Detail:item_unavailable", OnClick = DoTestItemUnavailable },
+        // new BtnInfo() { Title = "Detail:refunded", OnClick = DoTestRefunded },
         
         new BtnInfo() { Title = "Pay:purchased", OnClick = DoPayPurchased },
-        new BtnInfo() { Title = "Pay:canceled", OnClick = DoPayCanceled },
-        new BtnInfo() { Title = "Pay:item_unavailable", OnClick = DoPayItemUnavailable },
-        new BtnInfo() { Title = "Pay:refunded", OnClick = DoPayRefunded },
+        // new BtnInfo() { Title = "Pay:canceled", OnClick = DoPayCanceled },
+        // new BtnInfo() { Title = "Pay:item_unavailable", OnClick = DoPayItemUnavailable },
+        // new BtnInfo() { Title = "Pay:refunded", OnClick = DoPayRefunded },
+        
+        
+        new BtnInfo() { Title = "Detail:game_product_6", OnClick = DoGetPurchasedInfo6 },
+        new BtnInfo() { Title = "Pay:game_product_6", OnClick = DoPayRequest6 },
+        
+        new BtnInfo() { Title = "Detail:game_product_12", OnClick = DoGetPurchasedInfo12 },
+        new BtnInfo() { Title = "Pay:game_product_12", OnClick = DoPayRequest12 },
     };
+    
+    
+    private static void DoGetPurchasedInfo6()
+    {
+        TestProductDetail("game_product_6");
+    }
+    private static void DoPayRequest6()
+    {
+        DoPayProduct("game_product_6");
+    }
+    
+    
+    private static void DoGetPurchasedInfo12()
+    {
+        TestProductDetail("game_product_12");
+    }
+    private static void DoPayRequest12()
+    {
+        DoPayProduct("game_product_12");
+    }
 
+
+    
+    
+    
+    
     private static void DoTestPurchased()
     {
         TestProductDetail("android.test.purchased");
@@ -50,20 +82,20 @@ public class MyPayController : MonoBehaviour
 
     private static void DoPayPurchased()
     {
-        TestProductDetail("android.test.purchased");
+        DoPayProduct("android.test.purchased");
     }
 
     private static void DoPayCanceled()
     {
-        TestProductDetail("android.test.purchased");
+        DoPayProduct("android.test.purchased");
     }
     private static void DoPayItemUnavailable()
     {
-        TestProductDetail("android.test.item_unavailable");
+        DoPayProduct("android.test.item_unavailable");
     }
     private static void DoPayRefunded()
     {
-        TestProductDetail("android.test.refunded");
+        DoPayProduct("android.test.refunded");
     }
     
     private static void TestProductDetail(string productId)

@@ -118,8 +118,10 @@ public class PayClient {
                                                          List<ProductDetails> productDetailsList) {
                         // check billingResult
                         // process returned productDetailsList
-                        Log.i(TAG, "OnResponse QueryProductDetails  one billingResult " + billingResult.toString());
-                        Log.i(TAG, "OnResponse QueryProductDetails  one " + productDetailsList.toString());
+                        Log.i(TAG, "OnResponse QueryProductDetails  one billingResult " + billingResult.toString() + " details:" + productDetailsList.size());
+                        for (int i = 0; i < productDetailsList.size(); i++) {
+                            Log.i(TAG, "OnResponse QueryProductDetails  one [i]" + productDetailsList.get(i).toString());
+                        }
                     }
                 }
         );
@@ -140,8 +142,10 @@ public class PayClient {
         billingClient.queryProductDetailsAsync(
                 QueryProductDetailsParams.newBuilder().setProductList(products).build(),
                 (billingResult, productDetailsList) -> {
-                    Log.i(TAG, "OnResponse QueryProductDetails  one billingResult " + billingResult.toString());
-                    Log.i(TAG, "OnResponse QueryProductDetails  one " + productDetailsList.toString());
+                    Log.i(TAG, "OnResponse QueryProductDetails billingResult " + billingResult.toString() + " details:" + productDetailsList.size());
+                    for (int i = 0; i < productDetailsList.size(); i++) {
+                        Log.i(TAG, "OnResponse QueryProductDetails  [i]" + productDetailsList.get(i).toString());
+                    }
                     if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
                     }
                 }
@@ -173,8 +177,10 @@ public class PayClient {
 
         // Launch the billing flow
         BillingResult billingResult = billingClient.launchBillingFlow(activity, billingFlowParams);
-
     }
+
+
+
 
     // 处理够买交易 https://developer.android.com/google/play/billing/integrate?hl=zh-cn#process
 
