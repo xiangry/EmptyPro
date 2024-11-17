@@ -2,22 +2,12 @@ apply plugin: 'com.android.application'
 
 dependencies {
     implementation project(':unityLibrary')
-    implementation 'com.android.billingclient:billing:7.1.1'
-    implementation 'androidx.compose.runtime:runtime-android:1.7.5'
-    implementation 'com.google.android.gms:play-services-analytics-impl:18.2.0'
-
-
-//    设置google依赖
-    def billing_version = "7.0.0"
-    implementation "com.android.billingclient:billing-ktx:$billing_version"
-//    implementation 'com.google.guava:guava:31.1-android'  // list
-}
-
-
+    implementation project(':GGPay')
+    }
 
 android {
-    namespace "com.DefaultCompany.EProject"
-    ndkPath "C:/Program Files/Unity/Hub/Editor/2022.3.46f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/NDK"
+    namespace "com.KnockStudio.KnockHeroes"
+    ndkPath "/Applications/Unity/Hub/Editor/2022.3.47f1c1/PlaybackEngines/AndroidPlayer/NDK"
 
     compileSdkVersion 35
     buildToolsVersion '34.0.0'
@@ -30,17 +20,26 @@ android {
     defaultConfig {
         minSdkVersion 22
         targetSdkVersion 35
-        applicationId 'com.DefaultCompany.EProject'
+        applicationId 'com.KnockStudio.KnockHeroes'
         ndk {
             abiFilters 'armeabi-v7a'
         }
         versionCode 1
-        versionName '0.1'
+        versionName '0.2'
     }
 
     aaptOptions {
         noCompress = ['.unity3d', '.ress', '.resource', '.obb', '.bundle', '.unityexp'] + unityStreamingAssets.tokenize(', ')
         ignoreAssetsPattern = "!.svn:!.git:!.ds_store:!*.scc:!CVS:!thumbs.db:!picasa.ini:!*~"
+    }
+
+    signingConfigs {
+        release {
+            storeFile file('/Users/admin/Documents/Projects/EmptyPro/client/NativeProj/Android/user.keystore')
+            storePassword 'Zyc910515'
+            keyAlias 'zhaoyichen'
+            keyPassword 'Zyc910515'
+        }
     }
 
     lintOptions {
@@ -51,13 +50,13 @@ android {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt')
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             jniDebuggable true
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt')
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
         }
     }
 
