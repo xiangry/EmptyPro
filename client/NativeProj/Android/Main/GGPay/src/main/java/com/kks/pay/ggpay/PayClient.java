@@ -5,6 +5,7 @@ import android.util.Log;
 
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.android.billingclient.api.AcknowledgePurchaseParams;
 import com.android.billingclient.api.AcknowledgePurchaseResponseListener;
@@ -26,8 +27,12 @@ import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.android.billingclient.api.QueryProductDetailsParams;
 import com.android.billingclient.api.BillingFlowParams.ProductDetailsParams;
 import com.android.billingclient.api.QueryPurchasesParams;
+import com.android.billingclient.api.SkuDetails;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Dictionary;
+import java.util.Enumeration;
 import java.util.List;
 
 public class PayClient {
@@ -50,10 +55,25 @@ public class PayClient {
 
     private static String TAG = "GGPay Billing";
 
+    public static List<ProductDetails> cacheProductDetailsList = new ArrayList<> ();
+
+
     // 初始化 BillingClient https://developer.android.com/google/play/billing/integrate?hl=zh-cn#initialize
     public void InitGoogleClient(){
         Log.i(TAG, "Start InitGoogleClient step 0" );
-        purchasesUpdatedListener = new MyPurchasesUpdatedListener();
+        purchasesUpdatedListener = new PurchasesUpdatedListener(){
+
+            @Override
+            public void onPurchasesUpdated(@NonNull BillingResult billingResult, @Nullable List<Purchase> list) {
+                Log.i(TAG, "Start InitGoogleClient billingResult " + billingResult );
+                Log.i(TAG, "Start InitGoogleClient list " + list );
+                if(list!=null){
+                    for (int i = 0; i < list.size(); i++) {
+                        Log.i(TAG, "Start InitGoogleClient list [" + i + "]" + list.get(i).toString() );
+                    }
+                }
+            }
+        };
 
         Log.i(TAG, "Start InitGoogleClient step 1" );
         Builder builder = BillingClient.newBuilder(activity);
@@ -101,6 +121,7 @@ public class PayClient {
     // 展示可供购买的商品
     // https://developer.android.com/google/play/billing/integrate?hl=zh-cn#show-products
     public void QueryProductDetails(String productId){
+        productId = "google_product_6";
         Log.i(TAG, "Start QueryProductDetails one " + productId.toString());
         QueryProductDetailsParams queryProductDetailsParams =
                 QueryProductDetailsParams.newBuilder()
@@ -119,8 +140,9 @@ public class PayClient {
                         // check billingResult
                         // process returned productDetailsList
                         Log.i(TAG, "OnResponse QueryProductDetails  one billingResult " + billingResult.toString() + " details:" + productDetailsList.size());
-                        for (int i = 0; i < productDetailsList.size(); i++) {
-                            Log.i(TAG, "OnResponse QueryProductDetails  one [i]" + productDetailsList.get(i).toString());
+                        for (ProductDetails productDetails:productDetailsList) {
+                            cacheProductDetailsList.add(productDetails);
+                            Log.i(TAG, "OnResponse QueryProductDetails  one " + productDetails.toString());
                         }
                     }
                 }
@@ -157,7 +179,9 @@ public class PayClient {
     // 启动购买流程 https://developer.android.com/google/play/billing/integrate?hl=zh-cn#launch
     public void StartPay(String selectedOfferToken){
         Log.i(TAG, "StartPay" + selectedOfferToken.toString());
-        ProductDetails productDetails = null;
+
+
+        ProductDetails productDetails = cacheProductDetailsList.get(0);
         List<BillingFlowParams.ProductDetailsParams> productDetailsParamsList =
                 List.of(
                         ProductDetailsParams.newBuilder()

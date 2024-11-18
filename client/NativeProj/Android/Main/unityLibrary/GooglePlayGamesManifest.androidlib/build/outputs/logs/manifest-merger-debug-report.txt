@@ -1,0 +1,25 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\MyProjects\EmptyPro\client\NativeProj\Android\Main\unityLibrary\GooglePlayGamesManifest.androidlib\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest9934737312379144765.xml:2:13-83
+INJECTED from C:\MyProjects\EmptyPro\client\NativeProj\Android\Main\unityLibrary\GooglePlayGamesManifest.androidlib\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest9934737312379144765.xml:2:13-83
+INJECTED from C:\MyProjects\EmptyPro\client\NativeProj\Android\Main\unityLibrary\GooglePlayGamesManifest.androidlib\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest9934737312379144765.xml:2:13-83
+	package
+		INJECTED from C:\MyProjects\EmptyPro\client\NativeProj\Android\Main\unityLibrary\GooglePlayGamesManifest.androidlib\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest9934737312379144765.xml
+		ADDED from C:\MyProjects\EmptyPro\client\NativeProj\Android\Main\unityLibrary\GooglePlayGamesManifest.androidlib\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest9934737312379144765.xml:2:13-83
+		INJECTED from C:\MyProjects\EmptyPro\client\NativeProj\Android\Main\unityLibrary\GooglePlayGamesManifest.androidlib\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest9934737312379144765.xml
+	xmlns:android
+		ADDED from C:\MyProjects\EmptyPro\client\NativeProj\Android\Main\unityLibrary\GooglePlayGamesManifest.androidlib\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest9934737312379144765.xml:2:23-81
+uses-sdk
+INJECTED from C:\MyProjects\EmptyPro\client\NativeProj\Android\Main\unityLibrary\GooglePlayGamesManifest.androidlib\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest9934737312379144765.xml reason: use-sdk injection requested
+INJECTED from C:\MyProjects\EmptyPro\client\NativeProj\Android\Main\unityLibrary\GooglePlayGamesManifest.androidlib\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest9934737312379144765.xml
+INJECTED from C:\MyProjects\EmptyPro\client\NativeProj\Android\Main\unityLibrary\GooglePlayGamesManifest.androidlib\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest9934737312379144765.xml
+INJECTED from C:\MyProjects\EmptyPro\client\NativeProj\Android\Main\unityLibrary\GooglePlayGamesManifest.androidlib\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest9934737312379144765.xml
+INJECTED from C:\MyProjects\EmptyPro\client\NativeProj\Android\Main\unityLibrary\GooglePlayGamesManifest.androidlib\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest9934737312379144765.xml
+	android:targetSdkVersion
+		INJECTED from C:\MyProjects\EmptyPro\client\NativeProj\Android\Main\unityLibrary\GooglePlayGamesManifest.androidlib\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest9934737312379144765.xml
+		ADDED from C:\MyProjects\EmptyPro\client\NativeProj\Android\Main\unityLibrary\GooglePlayGamesManifest.androidlib\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest9934737312379144765.xml
+		INJECTED from C:\MyProjects\EmptyPro\client\NativeProj\Android\Main\unityLibrary\GooglePlayGamesManifest.androidlib\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest9934737312379144765.xml
+	android:minSdkVersion
+		INJECTED from C:\MyProjects\EmptyPro\client\NativeProj\Android\Main\unityLibrary\GooglePlayGamesManifest.androidlib\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest9934737312379144765.xml
+		ADDED from C:\MyProjects\EmptyPro\client\NativeProj\Android\Main\unityLibrary\GooglePlayGamesManifest.androidlib\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest9934737312379144765.xml
+		INJECTED from C:\MyProjects\EmptyPro\client\NativeProj\Android\Main\unityLibrary\GooglePlayGamesManifest.androidlib\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest9934737312379144765.xml

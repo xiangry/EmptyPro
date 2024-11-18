@@ -7,7 +7,8 @@ pluginManagement {
     }
 }
 
-include ':launcher', ':unityLibrary', ":GGPay"
+include ':launcher', ':unityLibrary', ':GGPay'
+include 'unityLibrary:GooglePlayGamesManifest.androidlib'
 
 
 dependencyResolutionManagement {
