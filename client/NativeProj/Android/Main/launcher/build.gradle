@@ -7,10 +7,10 @@ dependencies {
 
 android {
     namespace "com.KnockStudio.KnockHeroes"
-    ndkPath "C:/Program Files/Unity/Hub/Editor/2022.3.46f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/NDK"
+    ndkPath "/Applications/Unity/Hub/Editor/2022.3.47f1c1/PlaybackEngines/AndroidPlayer/NDK"
 
     compileSdkVersion 35
-    buildToolsVersion '35.0.0'
+    buildToolsVersion '34.0.0'
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
@@ -24,8 +24,8 @@ android {
         ndk {
             abiFilters 'armeabi-v7a', 'arm64-v8a'
         }
-        versionCode 13
-        versionName '0.0.241117'
+        versionCode 1
+        versionName '0.2'
     }
 
     aaptOptions {
@@ -35,7 +35,7 @@ android {
 
     signingConfigs {
         release {
-            storeFile file('C:/MyProjects/EmptyPro/client/NativeProj/Android/user.keystore')
+            storeFile file('/Users/admin/Documents/Projects/EmptyPro/client/NativeProj/Android/user.keystore')
             storePassword 'Zyc910515'
             keyAlias 'zhaoyichen'
             keyPassword 'Zyc910515'
