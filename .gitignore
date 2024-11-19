@@ -1,0 +1,31 @@
+# idea 本地文件
+**/.vs
+**/.vsconfig
+**/.idea
+**/.vscode
+
+
+# 本地的文件变化缓存不提交
+client/Assets/StreamingAssets/Table/temp/*
+client/Temp_data
+client/Library
+client/Temp
+client/Logs
+client/obj
+client/MemoryCaptures
+client/Packages/packages-lock.json
+client/*.csproj
+client/*.sln
+
+
+# macos gen file
+.DS_Store
+
+
+# native 平台文件 
+client/NativeProj/iOS/UnityOutput/*
+client/NativeProj/Android/Main/.gradle
+client/NativeProj/Android/Main/unityLibrary/build
+client/NativeProj/Android/**/build
+client/NativeProj/apks
+client/NativeProj/Android/Main/unityLibrary/*
