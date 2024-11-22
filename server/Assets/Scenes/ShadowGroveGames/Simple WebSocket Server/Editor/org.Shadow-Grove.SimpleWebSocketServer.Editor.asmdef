@@ -1,0 +1,18 @@
+{
+    "name": "org.Shadow-Grove.SimpleWebSocketServer.Editor",
+    "rootNamespace": "ShadowGroveGames.SimpleWebSocketServer.Editor",
+    "references": [
+        "GUID:cee6f5310b504a6449dbbfe71e8736ec"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

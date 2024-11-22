@@ -1,0 +1,171 @@
+<html>
+<head>
+    <style type="text/css">
+        :root {
+            --body-bg: #68aded;
+            --box-bg: #fff;
+            --border: 2px solid #ddd;
+            --left-msg-bg: #ececec;
+            --right-msg-bg: #579ffb;
+        }
+
+        html {
+            box-sizing: border-box;
+        }
+
+        *,
+        *:before,
+        *:after {
+            margin: 0;
+            padding: 0;
+            box-sizing: inherit;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: var(--body-bg);
+            font-family: Helvetica, sans-serif;
+        }
+
+        .box {
+            display: flex;
+            flex-flow: column wrap;
+            justify-content: space-between;
+            width: 400px;
+            height: 400px;
+            margin: 25px 10px;
+            border: var(--border);
+            border-radius: 5px;
+            background: var(--box-bg);
+            box-shadow: 0 15px 15px -5px rgba(0, 0, 0, 0.2);
+        }
+
+        .box-header {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: var(--border);
+            background: #eee;
+            color: #666;
+        }
+
+        .box-header .connection-indicator {
+            position: absolute;
+            right: 0;
+            display: block;
+            padding: 12px;
+            background: #ffa500;
+            border-radius: 90px;
+            margin: -3px 5px;
+        }
+
+        #counter {
+            position: relative;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #counter .id {
+            position: absolute;
+            top: -35px;
+        }
+
+        #counter .number {
+            font-size: 150px;
+            color: #474747;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        #counter .arrow {
+            border: solid #03A9F4;
+            border-width: 0 7px 7px 0;
+            display: inline-block;
+            padding: 20px;
+            cursor: pointer;
+        }
+
+        #counter .arrow.up {
+            transform: rotate(-135deg);
+            -webkit-transform: rotate(-135deg);
+        }
+
+        #counter .arrow.down {
+            transform: rotate(45deg);
+            -webkit-transform: rotate(45deg);
+        }
+    </style>
+</head>
+
+<body>
+<section class="box">
+    <header class="box-header">
+        <div class="box-header-title">
+            Example: Json Objects
+        </div>
+        <span id="connection-indicator" class="connection-indicator" alt="Connection indicator"></span>
+    </header>
+
+    <main id="counter">
+        <span class="id">Connecting...</span>
+        <i class="arrow up" data-direction="up"></i>
+        <span class="number">0</span>
+        <i class="arrow down" data-direction="down"></i>
+    </main>
+</section>
+<script type="application/javascript">
+    let socket = new WebSocket("ws://127.0.0.1:13100/counter");
+    let connectionIndicator = document.getElementById("connection-indicator");
+    let clientId = document.querySelector("#counter .id");
+    let counterNumber = document.querySelector("#counter .number");
+
+    let hasConnection = false;
+
+    socket.onopen = function(e) {
+        console.log(e);
+        connectionIndicator.style.backgroundColor = "#8BC34A";
+        hasConnection = true;
+    };
+
+    socket.onmessage = function(event) {
+        let data = JSON.parse(event.data);
+        clientId.innerHTML = data?.Id ?? '';
+        counterNumber.innerHTML = data?.Counter ?? 0;
+    };
+
+    socket.onclose = function(event) {
+        hasConnection = false;
+        clientId.innerHTML = 'Disconnected';
+        connectionIndicator.style.backgroundColor = "#ff0000";
+        console.log(event);
+    };
+
+    socket.onerror = function(error) {
+        connectionIndicator.style.backgroundColor = "#ff0000";
+        console.log(error);
+    };
+
+    console.log(document.querySelectorAll("#counter .arrow"));
+    document.querySelectorAll("#counter .arrow").forEach((arrow) => {
+        arrow.addEventListener("click", function(){
+            if (!hasConnection) {
+                console.log("No connection!");
+                return;
+            }
+
+            socket.send(JSON.stringify({
+                "CountUp": (this.dataset?.direction === "up")
+            }))
+        });
+    });
+
+</script>
+</body>
+</html>
