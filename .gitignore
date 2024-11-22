@@ -6,16 +6,16 @@
 
 
 # 本地的文件变化缓存不提交
-client/Assets/StreamingAssets/Table/temp/*
-client/Temp_data
-client/Library
-client/Temp
-client/Logs
-client/obj
-client/MemoryCaptures
-client/Packages/packages-lock.json
-client/*.csproj
-client/*.sln
+*/Assets/StreamingAssets/Table/temp/*
+*/Temp_data
+*/Library
+*/Temp
+*/Logs
+*/obj
+*/MemoryCaptures
+*/Packages/packages-lock.json
+*/*.csproj
+*/*.sln
 
 
 # macos gen file
