@@ -41,12 +41,16 @@ namespace Features.Purchasing
             var define = product.definition;
             var productMetadata = product.metadata;
             // var product = new Product(productDefine, productMetadata);
-            _storeController.InitiatePurchase(product, "developerPayload");
+            _storeController.InitiatePurchase(product, "productId_1234567890");
         }
 
         public void DoDumpProducts()
         {
-            throw new PurchasingException("Not supported DoQueryProductDetail");
+            LoggerEx.Debug(TAG, $"Start DoDumpProducts {_storeController.products.all.Length}");
+            foreach (var one in _storeController.products.all)
+            {
+                LoggerEx.Debug(TAG, $"  => {one.definition.id} : {one.metadata.localizedPriceString}|{one.metadata}|{one}");
+            }
         }
 
 
@@ -76,12 +80,13 @@ namespace Features.Purchasing
 
         public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs purchaseEvent)
         {
-            LoggerEx.Debug(TAG, $"ProcessPurchase: Complete - Product{purchaseEvent.purchasedProduct}");
-            
-            if(processPurchaseCallback == null) 
-                return PurchaseProcessingResult.Complete;
-                
-            return processPurchaseCallback.Invoke(purchaseEvent);
+            LoggerEx.Debug(TAG, $"ProcessPurchase: - Product{purchaseEvent.purchasedProduct}");
+
+            return PurchaseProcessingResult.Pending;
+            // if(processPurchaseCallback == null) 
+            //     return PurchaseProcessingResult.Complete;
+            //     
+            // return processPurchaseCallback.Invoke(purchaseEvent);
         }
 
         public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason)
