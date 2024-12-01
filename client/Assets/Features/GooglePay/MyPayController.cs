@@ -19,6 +19,8 @@ public class MyPayController : MonoBehaviour
 
     private const string TAG = "PayController";
 
+    public string ServerIP = "127.0.0.1:14100";
+
     
     public List<BtnInfo> _allBtnInfos = new List<BtnInfo>()
     {

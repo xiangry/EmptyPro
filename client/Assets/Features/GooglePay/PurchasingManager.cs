@@ -156,6 +156,9 @@ namespace Features.Purchasing
         public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs purchaseEvent)
         {
             LoggerEx.Debug(TAG, $"ProcessPurchase: - Product{purchaseEvent.purchasedProduct.ConvertToString()}");
+            var result = new MyPurchasingEventResult(MyPurchasingEventType.PurchasingSuccess, true);
+            result.SetPurchasingInfo(purchaseEvent.purchasedProduct.receipt);
+            _purchasingResultCallBack.Invoke(result);
             return PurchaseProcessingResult.Pending;
             // if(processPurchaseCallback == null) 
             //     return PurchaseProcessingResult.Complete;
@@ -234,6 +237,7 @@ public enum MyPurchasingEventType
     Init = 1,
     AddProduct = 2,
     Purchasing = 3,
+    PurchasingSuccess = 3,
 }
 
 public class MyPurchasingEventResult
@@ -242,15 +246,25 @@ public class MyPurchasingEventResult
     public bool result = false;
     public string reason = string.Empty;
     public string message = string.Empty;
+
+    #region 订单信息
+
+    public string receipt;
+    #endregion
     
     private MyPurchasingEventResult(){}
 
-    public MyPurchasingEventResult(MyPurchasingEventType eventType, bool result, string reason = null, string message = null)
+    public MyPurchasingEventResult(MyPurchasingEventType eventType, bool result = true, string reason = null, string message = null)
     {
         this.eventType = eventType;
         this.result = result;
         this.reason = reason;
         this.message = message;
+    }
+
+    public void SetPurchasingInfo(string receipt)
+    {
+        this.receipt = receipt;
     }
 
     public override string ToString()

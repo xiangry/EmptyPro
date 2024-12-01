@@ -293,6 +293,7 @@ GameObject:
   - component: {fileID: 1043387646}
   - component: {fileID: 1043387644}
   - component: {fileID: 1043387647}
+  - component: {fileID: 1043387648}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -342,6 +343,20 @@ MonoBehaviour:
   btnBoard: {fileID: 1133366798}
   inputField: {fileID: 1133366797}
   rectTransform: {fileID: 1133366796}
+  ServerIP: 127.0.0.1:14100
+--- !u!114 &1043387648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1043387643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 845225987aa54a8b863f764b21e8543e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ServerConfig: {fileID: 11400000, guid: 807135541b7464983b60329e36ad500b, type: 2}
 --- !u!1001 &1133366795
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -472,11 +487,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2292746415195150634, guid: be07f2cdf75a349e6bf8a41745c4cfb8, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 532.3676
+      value: 405.40305
       objectReference: {fileID: 0}
     - target: {fileID: 2292746415195150634, guid: be07f2cdf75a349e6bf8a41745c4cfb8, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -311.45316
+      value: -514.3012
       objectReference: {fileID: 0}
     - target: {fileID: 2292746415195150634, guid: be07f2cdf75a349e6bf8a41745c4cfb8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

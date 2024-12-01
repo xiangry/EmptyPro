@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using DefaultNamespace;
+using Framework.Log;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +16,9 @@ public class Launcher : MonoBehaviour
     {
         toastBtn.onClick.AddListener(OnToastMessage);
         restartBtn1.onClick.AddListener(OnRestartApp);
+        
+        LoggerEx.RegisterLogger(new ServerLogger());
+        ServerClient.Instance.Init();
     }
 
     void OnToastMessage()
