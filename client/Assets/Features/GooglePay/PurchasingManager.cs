@@ -31,8 +31,8 @@ namespace Features.Purchasing
             }
 
             _purchasingResultCallBack = callFunc;
-            StandardPurchasingModule.Instance().useFakeStoreAlways = true;
-            StandardPurchasingModule.Instance().useFakeStoreUIMode = FakeStoreUIMode.StandardUser;
+            // StandardPurchasingModule.Instance().useFakeStoreAlways = true;
+            // StandardPurchasingModule.Instance().useFakeStoreUIMode = FakeStoreUIMode.StandardUser;
             
             var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
             foreach (var productId in productIds)
