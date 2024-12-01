@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using Data;
 using Data.DB;
 using Framework.Log;
+using MongoDB.Bson.IO;
 using Newtonsoft.Json.Linq;
 using ShadowGroveGames.SimpleHttpAndRestServer.Scripts;
 using ShadowGroveGames.SimpleHttpAndRestServer.Scripts.Server;
@@ -33,7 +36,9 @@ namespace Game
         [SimpleEventServerRouting(HttpConstants.MethodPost, "/log")]
         public void LogData(HttpListenerContext context)
         {
-            LoggerEx.Debug($"ReceiveLog:{context.Request.GetStringBody()}");
+            var data = Convert.FromBase64String(context.Request.GetStringBody());
+            var str = Encoding.UTF8.GetString(data);
+            LoggerEx.Debug($"ReceiveLog:{str}");
         }
         
     }
