@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Features.Purchasing;
+using Framework.Log;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -14,6 +16,8 @@ public class MyPayController : MonoBehaviour
     public RectTransform rectTransform;
     
     private List<Button> allBtns = new List<Button>();
+
+    private const string TAG = "PayController";
 
     
     public List<BtnInfo> _allBtnInfos = new List<BtnInfo>()
@@ -70,7 +74,7 @@ public class MyPayController : MonoBehaviour
     private void DoPayProduct(string productId)
     {
         DebugInfo($"DoPayProduct {productId}");
-        _purchasingClient.DoLaunchPurchaseFlow(productId);
+        _purchasingClient.DoLaunchPurchaseFlow(productId, $"Pay_{DateTime.Now}");
     }
 
     private void DebugInfo(string info)
@@ -81,7 +85,10 @@ public class MyPayController : MonoBehaviour
     private void DoClientInit()
     {
         Debug.Log($"[Unity]: google pay DoClientInit");
-        _purchasingClient.InitializeClient(BillingConfig.AllProducts);
+        _purchasingClient.InitializeClient(BillingConfig.AllProducts, result =>
+        {
+            LoggerEx.Debug(TAG, $"On Purchasing Info:{result}");
+        });
     }
     
     private void DoDumpProducts()
