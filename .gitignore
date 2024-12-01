@@ -29,3 +29,4 @@ client/NativeProj/Android/Main/unityLibrary/build
 client/NativeProj/Android/**/build
 client/NativeProj/apks
 client/NativeProj/Android/Main/unityLibrary/*
+*.apk
