@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DefaultNamespace;
 using Features.Purchasing;
 using Framework.Log;
 using TMPro;
@@ -25,7 +26,7 @@ public class MyPayController : MonoBehaviour
     public List<BtnInfo> _allBtnInfos = new List<BtnInfo>()
     {
     };
-
+    
     #region 切换商品
 
     private IPurchasing _purchasingClient;
@@ -103,6 +104,10 @@ public class MyPayController : MonoBehaviour
     void Start()
     {
         GameObject.DontDestroyOnLoad(this);
+        
+        
+        LoggerEx.RegisterLogger(new ServerLogger());
+        ServerClient.Instance.Init();
 
         for (int i = 0; i < btnBoard.childCount; i++)
         {
