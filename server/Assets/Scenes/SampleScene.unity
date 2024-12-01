@@ -220,7 +220,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4911567097009547277, guid: 0c5852c69751ccc4fb6c4608068d407c, type: 3}
       propertyPath: OnReceiveRequest.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4911567097009547277, guid: 0c5852c69751ccc4fb6c4608068d407c, type: 3}
       propertyPath: OnReceiveRequest.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -241,7 +241,7 @@ PrefabInstance:
     - target: {fileID: 4911567097009547277, guid: 0c5852c69751ccc4fb6c4608068d407c, type: 3}
       propertyPath: OnReceiveRequest.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 81742082}
     - target: {fileID: 4911567097009547277, guid: 0c5852c69751ccc4fb6c4608068d407c, type: 3}
       propertyPath: OnReceiveRequest.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
@@ -264,7 +264,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4911567097009547277, guid: 0c5852c69751ccc4fb6c4608068d407c, type: 3}
       propertyPath: OnReceiveRequest.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: GetPlayerRotation
+      value: LogData
       objectReference: {fileID: 0}
     - target: {fileID: 4911567097009547277, guid: 0c5852c69751ccc4fb6c4608068d407c, type: 3}
       propertyPath: OnReceiveRequest.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
@@ -276,8 +276,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4911567097009547277, guid: 0c5852c69751ccc4fb6c4608068d407c, type: 3}
       propertyPath: OnReceiveRequest.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: ShadowGroveGames.SimpleRestAndHttpServer.Examples.Example1_PlayerPositionRequestHandler,
-        org.Shadow-Grove.SimpleRestAndHttpServer.Examples
+      value: Game.TestStates, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4911567097009547277, guid: 0c5852c69751ccc4fb6c4608068d407c, type: 3}
       propertyPath: OnReceiveRequest.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName

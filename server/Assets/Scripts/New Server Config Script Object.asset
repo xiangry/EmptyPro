@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24c06ac66fd7248268827a96878b27af, type: 3}
   m_Name: New Server Config Script Object
   m_EditorClassIdentifier: 
-  SererIP: 
-  Port: 
+  SererIP: 127.0.0.1
+  Port: 14100
   LogApi: 
   AcknowledgeApi: 

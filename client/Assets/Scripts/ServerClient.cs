@@ -21,7 +21,7 @@ namespace DefaultNamespace
         
         public void Send(string method, string content)
         {
-            var uri = new Uri($"{ServerConfig.SererIP}:{ServerConfig.SererIP}/{method}");
+            var uri = new Uri($"{ServerConfig.SererIP}:{ServerConfig.Port}/{method}");
             var request = new HTTPRequest(uri, HTTPMethods.Post);
             var bstr = Convert.ToBase64String(UTF8Encoding.Default.GetBytes(content));
             request.RawData = UTF8Encoding.Default.GetBytes(bstr);
