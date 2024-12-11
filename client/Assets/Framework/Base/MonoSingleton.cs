@@ -1,8 +1,9 @@
+using System;
 using UnityEngine;
 
 namespace Framework.Base
 {
-    public abstract class MonoSingleton<T> : MonoBehaviour where T: Component, new()
+    public abstract class MonoSingleton<T> : MonoBehaviour where T:MonoSingleton<T>, new()
     {
         private static T _instance;
         private static readonly object _lock = new object();
@@ -32,17 +33,32 @@ namespace Framework.Base
                             _instance = singletonObject.AddComponent<T>();
                             DontDestroyOnLoad(singletonObject); // 防止对象在场景切换时被销毁
                         }
+                        _instance.Init();
                     }
                     return _instance;
                 }
             }
         }
 
+        protected abstract void OnInit();
+        public void Init()
+        {
+            try
+            {
+                OnInit();
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Init Error {this}");
+            }
+        }
+        
         protected virtual void Awake()
         {
             if (_instance == null)
             {
                 _instance = this as T;
+                this.Init();
                 DontDestroyOnLoad(gameObject); // 防止对象在场景切换时被销毁
             }
             else if (_instance != this)

@@ -1,6 +1,7 @@
 #if USE_IN_APP_PURCHASING
 using System;
 using System.Collections.Generic;using System.Globalization;
+using DefaultNamespace;
 using Framework.Base;
 using Framework.Log;
 using UnityEngine;
@@ -222,6 +223,11 @@ namespace Features.Purchasing
             return true;
         }
         #endregion
+
+        protected override void OnInit()
+        {
+            
+        }
     }
 }
 
@@ -242,7 +248,7 @@ public enum MyPurchasingEventType
 
 public class MyPurchasingEventResult
 {
-    private MyPurchasingEventType eventType = MyPurchasingEventType.None;
+    public MyPurchasingEventType eventType { get; private set; } = MyPurchasingEventType.None;
     public bool result = false;
     public string reason = string.Empty;
     public string message = string.Empty;

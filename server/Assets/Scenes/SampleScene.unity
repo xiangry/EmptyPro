@@ -219,6 +219,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4911567097009547277, guid: 0c5852c69751ccc4fb6c4608068d407c, type: 3}
+      propertyPath: _listeningAddresses.Array.data[0]._host
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4911567097009547277, guid: 0c5852c69751ccc4fb6c4608068d407c, type: 3}
       propertyPath: OnReceiveRequest.m_PersistentCalls.m_Calls.Array.size
       value: 2
       objectReference: {fileID: 0}

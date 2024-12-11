@@ -14,14 +14,15 @@ public class MyPayController : MonoBehaviour
     public Transform btnBoard;
 
     public TMP_InputField inputField;
+    public TMP_InputField serverInfoField;
+    public Button changeServerBtn;
     public RectTransform rectTransform;
     
     private List<Button> allBtns = new List<Button>();
 
     private const string TAG = "PayController";
 
-    public string ServerIP = "127.0.0.1:14100";
-
+    
     
     public List<BtnInfo> _allBtnInfos = new List<BtnInfo>()
     {
@@ -77,7 +78,7 @@ public class MyPayController : MonoBehaviour
     private void DoPayProduct(string productId)
     {
         DebugInfo($"DoPayProduct {productId}");
-        _purchasingClient.DoLaunchPurchaseFlow(productId, $"Pay_{DateTime.Now}");
+        _purchasingClient.DoLaunchPurchaseFlow(productId, $"my_product_{productId}-{DateTime.Now}");
     }
 
     private void DebugInfo(string info)
@@ -91,6 +92,10 @@ public class MyPayController : MonoBehaviour
         _purchasingClient.InitializeClient(BillingConfig.AllProducts, result =>
         {
             LoggerEx.Debug(TAG, $"On Purchasing Info:{result}");
+            if (result.eventType == MyPurchasingEventType.Purchasing)
+            {
+                ServerClient.Instance.SendPurchasingInfo(result.receipt);
+            }
         });
     }
     
@@ -104,10 +109,12 @@ public class MyPayController : MonoBehaviour
     void Start()
     {
         GameObject.DontDestroyOnLoad(this);
-        
+
+        var serverIp = ServerClient.Instance.ServerIp;
+        var serverIpPort = ServerClient.Instance.ServerPort;
+        serverInfoField.text = $"{serverIp}:{serverIpPort}";
         
         LoggerEx.RegisterLogger(new ServerLogger());
-        ServerClient.Instance.Init();
 
         for (int i = 0; i < btnBoard.childCount; i++)
         {
@@ -117,6 +124,7 @@ public class MyPayController : MonoBehaviour
         }
 
 
+        changeServerBtn.onClick.AddListener(OnServerChangeBtnClicked);
 
         _allBtnInfos.Add(new BtnInfo() { Title = "Pre Product", OnClick = SwitchProductPer });
         _allBtnInfos.Add(new BtnInfo() { Title = "Next Product", OnClick = SwitchProductNext });
@@ -142,7 +150,18 @@ public class MyPayController : MonoBehaviour
         LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
     }
 
-    
+    private void OnServerChangeBtnClicked()
+    {
+        var serverInfo = serverInfoField.text;
+        if(string.IsNullOrEmpty(serverInfo))
+            return;
+        var list = serverInfo.Split(":");
+        if(list.Length < 2)
+            return;
+        ServerClient.Instance.SetNewServerInfo(list[0], list[1]);
+    }
+
+
     public class BtnInfo
     {
         public string Title;
