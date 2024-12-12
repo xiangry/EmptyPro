@@ -38,11 +38,20 @@ namespace DefaultNamespace
         
         public void Send(string method, string content)
         {
+            
             var url = $"http://{ServerIp}:{ServerPort}/{method}";
+            
+            if(method != ServerConfig.LogApi)
+                SendLog($"[{method}][{url}]:{content}");
             var uri = new Uri(url);
             var request = new HTTPRequest(uri, HTTPMethods.Post);
-            var bstr = Convert.ToBase64String(UTF8Encoding.Default.GetBytes(content));
-            request.RawData = UTF8Encoding.Default.GetBytes(bstr);
+            var bstr = Convert.ToBase64String(Encoding.Default.GetBytes(content));
+            request.RawData = Encoding.Default.GetBytes(bstr);
+            request.Callback = (originalRequest, response) =>
+            {
+                if(!response.IsSuccess)
+                    Debug.LogError($"send http request error:{response?.StatusCode}|{response?.Message}");
+            };
             request.Send();
         }
 

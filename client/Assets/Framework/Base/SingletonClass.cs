@@ -1,6 +1,9 @@
+using System;
+using UnityEngine;
+
 namespace Framework.Base
 {
-    public class SingletonClass<T> where T:new()
+    public abstract class SingletonClass<T> where T: SingletonClass<T>, new()
     {
         private static T _instance;
 
@@ -11,10 +14,25 @@ namespace Framework.Base
                 if (_instance == null)
                 {
                     _instance = new T(); 
+                    _instance.Init();
                 }
 
                 return _instance;
             }
         }
+
+        private void Init()
+        {
+            try
+            {
+                OnInit();
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Init {this.GetType()} failed.{e}");
+            }
+        }
+
+        abstract protected void OnInit();
     }
 }

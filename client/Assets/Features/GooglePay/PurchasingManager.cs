@@ -275,7 +275,7 @@ public class MyPurchasingEventResult
 
     public override string ToString()
     {
-        return $"{eventType}-{result}-{reason}-{message}";
+        return $"eventType:{eventType}|result:{result}|reason:{reason}:message:{message}|receipt:{receipt}";
     }
 }
 

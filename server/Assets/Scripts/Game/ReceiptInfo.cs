@@ -4,6 +4,24 @@ using System.Collections.Generic;
 
 namespace Game
 {
+    public class ReceiptData
+    {
+        public PayloadData Payload { get; set; }
+
+        public string Store { get; set; }
+
+        public string TransactionId { get; set; }
+    }
+
+    public class PayloadData
+    {
+        public PurchaseInfo PurchaseInfo { get; set; }
+
+        public string Signature { get; set; }
+
+        public List<string> SkuDetails { get; set; }
+    }
+    
 
     public class SkuDetails
     {
@@ -19,7 +37,7 @@ namespace Game
         public string SkuDetailsToken { get; set; }
     }
 
-    public class Payload
+    public class PayloadBase
     {
         [JsonProperty("json")] public string Json { get; set; }
 
@@ -28,7 +46,7 @@ namespace Game
         [JsonProperty("skuDetails")] public List<string> SkuDetails { get; set; }
     }
 
-    public class Receipt
+    public class ReceiptBase
     {
         [JsonProperty("Payload")] public string Payload { get; set; }
 
@@ -54,5 +72,34 @@ namespace Game
         [JsonProperty("quantity")] public int Quantity { get; set; }
 
         [JsonProperty("acknowledged")] public bool Acknowledged { get; set; }
+    }
+
+    public static class ReceiptParse
+    {
+        public static ReceiptData Parse(string receiptJson)
+        {
+            // 解析外层 JSON
+            var receipt = JsonConvert.DeserializeObject<ReceiptBase>(receiptJson);
+
+            var payload = JsonConvert.DeserializeObject<PayloadBase>(receipt.Payload);
+            
+            // 解析嵌套的 Payload.Json 字段
+            var purchasingInfo = JsonConvert.DeserializeObject<PurchaseInfo>(payload.Json);
+
+            var payloadData = new PayloadData()
+            {
+                Signature = payload.Signature,
+                SkuDetails = payload.SkuDetails,
+                PurchaseInfo = purchasingInfo
+            };
+
+            var receiptData = new ReceiptData()
+            {
+                Store = receipt.Store,
+                TransactionId = receipt.TransactionId,
+                Payload = payloadData,
+            };
+            return receiptData;
+        }
     }
 }

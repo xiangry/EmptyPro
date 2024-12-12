@@ -15,4 +15,4 @@ MonoBehaviour:
   SererIP: 127.0.0.1
   Port: 14100
   LogApi: log
-  AcknowledgeApi: acknowiedge
+  AcknowledgeApi: conformOrder

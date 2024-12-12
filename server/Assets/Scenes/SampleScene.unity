@@ -122,6 +122,50 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &49721099
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 49721101}
+  - component: {fileID: 49721100}
+  m_Layer: 0
+  m_Name: Pay
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &49721100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 49721099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 151a97728024470e8bdef92ba1cb2e29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &49721101
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 49721099}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &81742081
 GameObject:
   m_ObjectHideFlags: 0
@@ -219,24 +263,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4911567097009547277, guid: 0c5852c69751ccc4fb6c4608068d407c, type: 3}
+      propertyPath: CaseSensitiveRouting
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4911567097009547277, guid: 0c5852c69751ccc4fb6c4608068d407c, type: 3}
       propertyPath: _listeningAddresses.Array.data[0]._host
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4911567097009547277, guid: 0c5852c69751ccc4fb6c4608068d407c, type: 3}
-      propertyPath: OnReceiveRequest.m_PersistentCalls.m_Calls.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4911567097009547277, guid: 0c5852c69751ccc4fb6c4608068d407c, type: 3}
-      propertyPath: OnReceiveRequest.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4911567097009547277, guid: 0c5852c69751ccc4fb6c4608068d407c, type: 3}
-      propertyPath: OnReceiveRequest.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4911567097009547277, guid: 0c5852c69751ccc4fb6c4608068d407c, type: 3}
-      propertyPath: OnReceiveRequest.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4911567097009547277, guid: 0c5852c69751ccc4fb6c4608068d407c, type: 3}
       propertyPath: OnReceiveRequest.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -249,56 +281,11 @@ PrefabInstance:
     - target: {fileID: 4911567097009547277, guid: 0c5852c69751ccc4fb6c4608068d407c, type: 3}
       propertyPath: OnReceiveRequest.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 49721100}
     - target: {fileID: 4911567097009547277, guid: 0c5852c69751ccc4fb6c4608068d407c, type: 3}
-      propertyPath: OnReceiveRequest.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4911567097009547277, guid: 0c5852c69751ccc4fb6c4608068d407c, type: 3}
-      propertyPath: OnReceiveRequest.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4911567097009547277, guid: 0c5852c69751ccc4fb6c4608068d407c, type: 3}
-      propertyPath: OnReceiveRequest.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4911567097009547277, guid: 0c5852c69751ccc4fb6c4608068d407c, type: 3}
-      propertyPath: OnReceiveRequest.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: DashboardStates
-      objectReference: {fileID: 0}
-    - target: {fileID: 4911567097009547277, guid: 0c5852c69751ccc4fb6c4608068d407c, type: 3}
-      propertyPath: OnReceiveRequest.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: LogData
-      objectReference: {fileID: 0}
-    - target: {fileID: 4911567097009547277, guid: 0c5852c69751ccc4fb6c4608068d407c, type: 3}
-      propertyPath: OnReceiveRequest.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
-      value: GetPlayerRotation
-      objectReference: {fileID: 0}
-    - target: {fileID: 4911567097009547277, guid: 0c5852c69751ccc4fb6c4608068d407c, type: 3}
-      propertyPath: OnReceiveRequest.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Game.TestStates, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 4911567097009547277, guid: 0c5852c69751ccc4fb6c4608068d407c, type: 3}
-      propertyPath: OnReceiveRequest.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: Game.TestStates, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 4911567097009547277, guid: 0c5852c69751ccc4fb6c4608068d407c, type: 3}
-      propertyPath: OnReceiveRequest.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
-      value: ShadowGroveGames.SimpleRestAndHttpServer.Examples.Example1_PlayerPositionRequestHandler,
-        org.Shadow-Grove.SimpleRestAndHttpServer.Examples
-      objectReference: {fileID: 0}
-    - target: {fileID: 4911567097009547277, guid: 0c5852c69751ccc4fb6c4608068d407c, type: 3}
-      propertyPath: OnReceiveRequest.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 4911567097009547277, guid: 0c5852c69751ccc4fb6c4608068d407c, type: 3}
-      propertyPath: OnReceiveRequest.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 4911567097009547277, guid: 0c5852c69751ccc4fb6c4608068d407c, type: 3}
-      propertyPath: OnReceiveRequest.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
+      propertyPath: OnReceiveRequest.m_PersistentCalls.m_Calls.Array.data[3].m_Target
+      value: 
+      objectReference: {fileID: 81742082}
     - target: {fileID: 4911567097009547282, guid: 0c5852c69751ccc4fb6c4608068d407c, type: 3}
       propertyPath: m_Name
       value: Simple Events Server
@@ -314,3 +301,4 @@ SceneRoots:
   m_Roots:
   - {fileID: 1822427938}
   - {fileID: 81742083}
+  - {fileID: 49721101}

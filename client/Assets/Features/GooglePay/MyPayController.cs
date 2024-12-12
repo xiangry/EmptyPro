@@ -91,7 +91,7 @@ public class MyPayController : MonoBehaviour
         Debug.Log($"[Unity]: google pay DoClientInit");
         _purchasingClient.InitializeClient(BillingConfig.AllProducts, result =>
         {
-            LoggerEx.Debug(TAG, $"On Purchasing Info:{result}");
+            LoggerEx.Debug(TAG, $"[OnPurchasingResult]:{result}");
             if (result.eventType == MyPurchasingEventType.Purchasing)
             {
                 ServerClient.Instance.SendPurchasingInfo(result.receipt);

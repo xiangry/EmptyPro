@@ -4,6 +4,7 @@ using BestHTTP;
 using Data;
 using Data.DB;
 using Framework.Log;
+using Game.Billing;
 using Newtonsoft.Json.Linq;
 using ShadowGroveGames.SimpleHttpAndRestServer.Scripts;
 using ShadowGroveGames.SimpleHttpAndRestServer.Scripts.Server;
@@ -14,7 +15,13 @@ namespace Game
 {
     public class PayController : MonoBehaviour
     {
-        [SimpleEventServerRouting(HttpConstants.MethodGet, "/pay/order")]
+        private void Start()
+        {
+            LoggerEx.Debug("PayController", "PayController Start ");
+        }
+
+        
+        [SimpleEventServerRouting(HttpConstants.MethodPost, "/pay/order")]
         public void C2SPayOrder(HttpListenerContext context)
         {
             var inputParams = InputUrlUtils.ParseGetUrlParams(context.Request.Url.ToString());
@@ -41,19 +48,29 @@ namespace Game
         [SimpleEventServerRouting(HttpConstants.MethodGet, "/pay/conformOrder")]
         public void C2SPayConformOrder(HttpListenerContext context)
         {
+            var receiptJson = context.Request.GetStringBody();
+            
+            // 解析外层 JSON
+            var receiptData = ReceiptParse.Parse(receiptJson);
+
+            var payload = receiptData.Payload;
+            var purchaseInfo = payload.PurchaseInfo;
+            
             var packageName = "com.KnockStudio.KnockHeroes";
-            var subscriptionId = "google_product_6";  // productId
-            var token = "token";
+            var productId = purchaseInfo.ProductId;  // productId
+            var token = purchaseInfo.PurchaseToken;
             var url = "https://androidpublisher.googleapis.com/androidpublisher/v3/applications";
-            url = $"{url}/{packageName}/purchases/subscriptions/{subscriptionId}/tokens/{token}";
+            url = $"{url}/{packageName}/purchases/subscriptions/{productId}/tokens/{token}";
             var uri = new Uri(url);
             var request = new HTTPRequest(uri, HTTPMethods.Post);
             request.RawData = new byte[10];
             request.Callback = (originalRequest, response) =>
             {
-                LoggerEx.Debug($"acknowledge:{response.IsSuccess} {response.StatusCode} {response.DataAsText}");
+                LoggerEx.Debug("C2SPayConformOrder", $"acknowledge:{response.IsSuccess} {response.StatusCode} {response.DataAsText}");
             };
             request.Send();
+
+            DoValidate(receiptData);
             //
             //
             // var inputParams = InputUrlUtils.ParseGetUrlParams(context.Request.Url.ToString());
@@ -68,6 +85,14 @@ namespace Game
             // }
             // context.Response.JsonResponse(jObj);
         }
-        
+
+        private async void DoValidate(ReceiptData receiptData)
+        {
+            var payload = receiptData.Payload;
+            var purchaseInfo = payload.PurchaseInfo;
+            var productId = purchaseInfo.ProductId;  // productId
+            var token = purchaseInfo.PurchaseToken;
+            await GooglePlayBilling.ValidatePurchase(token, productId);
+        }
     }
 }
