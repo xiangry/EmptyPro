@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3883445437441630893}
   - component: {fileID: 3883445437441630894}
+  - component: {fileID: 2559062196841822440}
   m_Layer: 0
   m_Name: IAPGuard
   m_TagString: Untagged
@@ -24,13 +25,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3883445437441630895}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3883445437441630894
 MonoBehaviour:
@@ -44,6 +45,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddbf6f5dc9e75264597d90b7c4a59453, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  appID: YourAppID
-  userID: 
+  appID: f75f7a72f3976745
+  userID: 123
   inventoryRequestType: 0
+--- !u!114 &2559062196841822440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3883445437441630895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5800054bde764cc7afd2857994ae9dc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  productConfig: {fileID: 11400000, guid: 6598c65b4bb284240b53f4ef95a69761, type: 2}

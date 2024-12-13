@@ -3,11 +3,15 @@ using FLOBUK.IAPGUARD;
 using FLOBUK.IAPGUARD.Demo;
 using Framework.Base;
 using Framework.Log;
+using Newtonsoft.Json.Linq;
 using SimpleJSON;
 using UnityEngine;
 
 namespace Billing
 {
+    /// <summary>
+    /// 封装IAPGuard常用api
+    /// </summary>
     public class IAPBilling : SingletonClass<IAPBilling>
     {
         private IAPManager instance;
@@ -59,7 +63,7 @@ namespace Billing
         
         //IAPManagerDemo.purchaseCallback
         //result is JSONNode or null
-        void PurchaseResult(bool success, JSONNode result)
+        void PurchaseResult(bool success, string resultJson)
         {
             //Log output
             switch (success)
@@ -73,9 +77,11 @@ namespace Billing
                     break;
             }
 
-            if (result != null)
+            if (!string.IsNullOrEmpty(resultJson))
             {
-                PrintMessage("Raw: " + result.ToString());
+                PrintMessage("Raw: " + resultJson);
+
+                var result = JObject.Parse(resultJson);
                 PrintMessage("Product purchase: " + result["data"]["productId"]);
                 PrintMessage("Purchase result: " + success);
                 PrintMessage("See Log for more information!");

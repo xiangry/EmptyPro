@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86fe521717d345d3b2c95a091c469bd7, type: 3}
+  m_Name: ProductsData
+  m_EditorClassIdentifier: 
+  ConsumableProducts:
+  - google_product_6
+  - google_product_12
+  - google_product_25
+  - google_product_30
+  - google_product_50
+  - google_product_60
+  - google_product_68
+  - google_product_88
+  - google_product_98
+  - google_product_128
+  - google_product_188
+  - google_product_328
+  - google_product_648
+  NonConsumableProducts: []
+  SubscriptionProducts: []

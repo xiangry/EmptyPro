@@ -1,27 +1,25 @@
 using SimpleJSON;
 using System;
+using Features.Purchasing;
+using FLOBUK.IAPGUARD;
 using UnityEngine;
+using Unity.Services.Core;
+using UnityEngine.Purchasing;
+using UnityEngine.Purchasing.Extension;
 
-namespace FLOBUK.IAPGUARD.Demo
+
+namespace Billing
 {
-    using Unity.Services.Core;
-    using UnityEngine.Purchasing;
-    using UnityEngine.Purchasing.Extension;
-
     /// <summary>
     /// Unity IAP Demo Implementation.
     /// </summary>
-    public class IAPManager : MonoBehaviour, IDetailedStoreListener
+    public class BillingManager : MonoBehaviour, IDetailedStoreListener
     {
-        private static IAPManager instance;
+        private static BillingManager instance;
         public static event Action<Color, string> debugCallback;
         public static event Action<bool, string> purchaseCallback;
 
-        //product identifiers for App Stores
-        [Header("Product IDs")]
-        public string consumableProductId = "coins";
-        public string nonconsumableProductId = "no_ads";
-        public string subscriptionProductId = "abo_monthly";
+        public ProductScriptableObject productConfig;
 
         //Unity IAP references
         public IStoreController controller;
@@ -30,7 +28,7 @@ namespace FLOBUK.IAPGUARD.Demo
 
 
         //return the instance of this script.
-        public static IAPManager GetInstance()
+        public static BillingManager GetInstance()
         {
             return instance;
         }
@@ -64,9 +62,18 @@ namespace FLOBUK.IAPGUARD.Demo
 
                 builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
 
-                builder.AddProduct(consumableProductId, ProductType.Consumable);
-                builder.AddProduct(nonconsumableProductId, ProductType.NonConsumable);
-                builder.AddProduct(subscriptionProductId, ProductType.Subscription);
+                foreach (var productId in productConfig.ConsumableProducts)
+                {
+                    builder.AddProduct(productId, ProductType.Consumable);
+                }
+                foreach (var productId in productConfig.NonConsumableProducts)
+                {
+                    builder.AddProduct(productId, ProductType.NonConsumable);
+                }
+                foreach (var productId in productConfig.SubscriptionProducts)
+                {
+                    builder.AddProduct(productId, ProductType.Subscription);
+                }
 
                 //initialize Unity IAP
                 UnityPurchasing.Initialize(this, builder);

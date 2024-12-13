@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Billing;
 using UnityEngine;
 using UnityEngine.UI;
 using SimpleJSON;
@@ -27,7 +29,7 @@ namespace FLOBUK.IAPGUARD.Demo
 
         int processingPurchasesCount;
 
-        private IAPManager instance;
+        private BillingManager instance;
 
 
         void Start()
@@ -37,7 +39,7 @@ namespace FLOBUK.IAPGUARD.Demo
             #endif
 
             //get instance
-            instance = IAPManager.GetInstance();
+            instance = BillingManager.GetInstance();
             if (!instance) return;
 
             //subscribe to callbacks
@@ -63,9 +65,9 @@ namespace FLOBUK.IAPGUARD.Demo
 
 
         //buy buttons for different product types
-        public void BuyConsumable() { Buy(instance.consumableProductId); }
-        public void BuyNonconsumable() { Buy(instance.nonconsumableProductId); }
-        public void BuySubscription() { Buy(instance.subscriptionProductId); }
+        public void BuyConsumable() { Buy(BillingManager.GetInstance().productConfig.ConsumableProducts.LastOrDefault()); }
+        public void BuyNonconsumable() {  }
+        public void BuySubscription() { }
 
 
         //buy method triggering Unity IAP
@@ -75,7 +77,7 @@ namespace FLOBUK.IAPGUARD.Demo
             PrintMessage(Color.white, "Purchase Processing Count: " + processingPurchasesCount);
             UpdateUI();
 
-            instance.controller.InitiatePurchase(productId);
+            instance.controller.InitiatePurchase(productId, "hero123");
         }
 
 
@@ -88,7 +90,7 @@ namespace FLOBUK.IAPGUARD.Demo
 
         //IAPManagerDemo.purchaseCallback
         //result is JSONNode or null
-        void PurchaseResult(bool success, JSONNode result)
+        void PurchaseResult(bool success, string resultJson)
         {
             processingPurchasesCount--;
             processingPurchasesCount = Mathf.Clamp(processingPurchasesCount, 0, int.MaxValue);
@@ -108,9 +110,10 @@ namespace FLOBUK.IAPGUARD.Demo
             //UI feedback window
             InfoWindow.SetActive(true);
 
-            if (result != null)
+            if (!string.IsNullOrEmpty(resultJson))
             {
-                PrintMessage(Color.white, "Raw: " + result.ToString());
+                PrintMessage(Color.white, "Raw: " + resultJson);
+                var result = Newtonsoft.Json.Linq.JObject.Parse(resultJson);
 
                 InfoText.text = "Product purchase: " + result["data"]["productId"];
                 InfoText.text += "\n" + "Purchase result: " + success;
@@ -162,8 +165,8 @@ namespace FLOBUK.IAPGUARD.Demo
         //update graphical display of text contents with current states
         void UpdateUI()
         {
-            NonConsumableFlag.SetActive(IAPGuard.Instance.IsPurchased(instance.nonconsumableProductId));
-            SubscriptionFlag.SetActive(IAPGuard.Instance.IsPurchased(instance.subscriptionProductId));
+            NonConsumableFlag.SetActive(false);
+            SubscriptionFlag.SetActive(false);
         }
     }
 }

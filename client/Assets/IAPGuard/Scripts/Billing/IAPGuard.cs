@@ -18,7 +18,7 @@ namespace FLOBUK.IAPGUARD
     {
         private static IAPGuard _Instance;
         public static event Action inventoryCallback;
-        public static event Action<bool, JSONNode> purchaseCallback;
+        public static event Action<bool, string> purchaseCallback;
 
         const string validationEndpoint = "https://api.iapguard.com/v1/receipt/";
         const string userEndpoint = "https://api.iapguard.com/v1/user/";
@@ -198,6 +198,7 @@ namespace FLOBUK.IAPGUARD
 
             JSONNode receiptData = JSON.Parse(product.receipt);
             string transactionID = receiptData["TransactionID"].Value;
+            string payload = receiptData["Payload"].Value;
 
             #if UNITY_IOS
             IPurchaseReceipt[] receipts = localValidator.Validate(product.receipt);
@@ -218,11 +219,20 @@ namespace FLOBUK.IAPGUARD
                 pid = product.definition.storeSpecificId,
                 user = userID,
                 type = GetType(product.definition.type),
-                receipt = transactionID
+                receipt = transactionID,
+                payload = payload,
+                test = "1231",
             };
             string postData = JsonUtility.ToJson(request);
 
+            // if (Debug.isDebugBuild)
+            {
+                Debug.Log($"will send request:{postData}");
+            }
+            
+            
             JSONNode rawResponse = null;
+            JSONNode rawResponseJson = null;
             bool success = false;
             using (UnityWebRequest www = UnityWebRequest.Put(validationEndpoint + appID, postData))
             {
@@ -232,6 +242,7 @@ namespace FLOBUK.IAPGUARD
                 //raw JSON response
                 try
                 {
+                    rawResponseJson = www.downloadHandler.text;
                     rawResponse = JSON.Parse(www.downloadHandler.text);
                     success = www.error == null && rawResponse != null && string.IsNullOrEmpty(rawResponse["error"]) && rawResponse.HasKey("data");
                 }
@@ -254,7 +265,7 @@ namespace FLOBUK.IAPGUARD
                     else inventory.Add(productId, thisPurchase); //add new to inventory
                 }
 
-                purchaseCallback?.Invoke(success, rawResponse);
+                purchaseCallback?.Invoke(success, rawResponseJson);
             }
 
             //do not complete pending purchases but still leave them open for processing again later
@@ -559,6 +570,8 @@ namespace FLOBUK.IAPGUARD
         public string type;
         public string user;
         public string receipt;
+        public string payload;
+        public string test;
     }
 
 

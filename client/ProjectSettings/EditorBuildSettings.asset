@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Features/GooglePay/GooglePay.unity
-    guid: 7c8dfac3bf85b4761b9630bef1ba25da
+    path: Assets/IAPGuard/Scenes/Demo.unity
+    guid: cb85dc3399eb46c4abbd5db19fd6a423
   m_configObjects: {}
