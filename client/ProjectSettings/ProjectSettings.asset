@@ -264,7 +264,7 @@ PlayerSettings:
   AndroidTargetDevices: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: '{inproject}: NativeProj/Android/user.keystore'
+  AndroidKeystoreName: /Users/admin/nkgame/KnockHeroes_Client/user.keystore
   AndroidKeyaliasName: zhaoyichen
   AndroidEnableArmv9SecurityFeatures: 0
   AndroidBuildApkPerCpuArchitecture: 0

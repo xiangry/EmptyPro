@@ -30,3 +30,8 @@ client/NativeProj/Android/**/build
 client/NativeProj/apks
 client/NativeProj/Android/Main/unityLibrary/*
 *.apk
+
+
+.DS_Store
+**/.gradle
+client/NativeProj/Nav/unityLibrary
