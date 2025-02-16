@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using Framework.Log;
 
 namespace GoogleSdk.Runtime
 {
@@ -7,10 +8,15 @@ namespace GoogleSdk.Runtime
     {
         private AndroidJavaObject playIntegrityHelper;
         private IntegrityCallback integrityCallback;
-        
-        
+
+        public string _callbackFailure;
+        public string _callbackString;
 
         void Start()
+        {
+        }
+
+        public void Init()
         {
             if (Application.platform == RuntimePlatform.Android)
             {
@@ -27,18 +33,23 @@ namespace GoogleSdk.Runtime
 
         private void OnIntegrityCallbackFailure(string obj)
         {
-            Debug.Log($"{GoogleSdkSetting.TAG}:OnIntegrityCallbackFailure {obj}");
+            _callbackFailure = obj;
+            LoggerEx.Debug($"{GoogleSdkSetting.TAG}:OnIntegrityCallbackFailure {obj}");
         }
 
         private void OnIntegrityCallbackSuccess(string obj)
         {
-            Debug.Log($"{GoogleSdkSetting.TAG}:OnIntegrityCallbackSuccess {obj}");
+            _callbackString = obj;
+            LoggerEx.Debug($"{GoogleSdkSetting.TAG}:OnIntegrityCallbackSuccess {obj}");
         }
 
-        public void RequestIntegrityToken(Action<string> onSuccess, Action<string> onFailure)
+        public void RequestIntegrityToken(string nonce, Action<string> onSuccess, Action<string> onFailure)
         {
             integrityCallback = new IntegrityCallback(this, onSuccess, onFailure);
-            playIntegrityHelper.Call("requestIntegrityToken");
+            
+            // 传递 C# 监听器到 Java 代码
+            playIntegrityHelper.Call("setIntegrityCallback", integrityCallback);
+            playIntegrityHelper.Call("requestIntegrityToken", nonce);
         }
 
         // Java 回调类
@@ -49,7 +60,7 @@ namespace GoogleSdk.Runtime
             private Action<string> onFailure;
 
             public IntegrityCallback(PlayIntegrityManager manager, Action<string> onSuccess, Action<string> onFailure)
-                : base("com.example.unityplayintegrity.IntegrityCallback")
+                : base("com.knockgame.googlesdk.IntegrityCallback")
             {
                 this.manager = manager;
                 this.onSuccess = onSuccess;
@@ -58,14 +69,20 @@ namespace GoogleSdk.Runtime
 
             void onIntegritySuccess(string integrityToken)
             {
-                Debug.Log("Received Integrity Token: " + integrityToken);
-                onSuccess?.Invoke(integrityToken);
+                UnityMainThreadDispatcher.RunOnMainThread(() =>
+                {
+                    LoggerEx.Debug("Received Integrity Token: " + integrityToken);
+                    onSuccess?.Invoke(integrityToken);
+                });
             }
 
             void onIntegrityFailure(string errorMessage)
             {
-                Debug.LogError("Integrity check failed: " + errorMessage);
-                onFailure?.Invoke(errorMessage);
+                UnityMainThreadDispatcher.RunOnMainThread(() =>
+                {
+                    LoggerEx.Debug("Integrity check failed: " + errorMessage);
+                    onFailure?.Invoke(errorMessage);
+                });
             }
         }
     }
