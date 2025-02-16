@@ -50,12 +50,17 @@ public class IntegrityTest : MonoBehaviour
 
     private string GenerateNonce()
     {
-        byte[] nonceBytes = new byte[16];
+        byte[] nonceBytes = new byte[32];
         using (RandomNumberGenerator rng = RandomNumberGenerator.Create())
         {
             rng.GetBytes(nonceBytes);
         }
-        return Convert.ToBase64String(nonceBytes);
+        // 进行 Base64 URL Safe No Wrap 编码
+        string nonce = Convert.ToBase64String(nonceBytes)
+            .Replace('+', '-')  // URL Safe: 替换 +
+            .Replace('/', '_')  // URL Safe: 替换 /
+            .TrimEnd('=');      // No Wrap: 去除尾部 =
+        return nonce;
     }
     
     void OnReStart3BtnClicked()
