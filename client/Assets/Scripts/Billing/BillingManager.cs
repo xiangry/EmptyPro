@@ -1,7 +1,4 @@
-using SimpleJSON;
 using System;
-using Features.Purchasing;
-using FLOBUK.IAPGUARD;
 using UnityEngine;
 using Unity.Services.Core;
 using UnityEngine.Purchasing;
@@ -92,11 +89,6 @@ namespace Billing
             this.controller = controller;
             this.extensions = extensions;
 
-            //initialize IAPGUARD
-            IAPGuard.Instance.Initialize(controller, builder);
-            IAPGuard.purchaseCallback += OnPurchaseResult;
-            //if you are making use of user inventory
-            IAPGuard.Instance.RequestInventory();
         }
 
 
@@ -105,58 +97,10 @@ namespace Billing
         {
             Product product = args.purchasedProduct;
 
-            //do validation, the magic happens here!
-            PurchaseState state = IAPGuard.Instance.RequestPurchase(product);
-            //handle what happens with the product next
-            switch (state)
-            {
-                case PurchaseState.Purchased:
-                    //nothing to do here: with the transaction finished at this point it means that either
-                    //1) local validation passed but server validation is not supported, or
-                    //2) validation is not supported at all, e.g. when running on a non-supported store
-                    break;
-
-                //transaction is pending or about to be validated on the server
-                //it is important to return pending to leave the transaction open for IAPGUARD
-                //IAPGUARD will fire its purchaseCallback when done processing
-                case PurchaseState.Pending: 
-                    DebugLogText(Color.white, "Product purchase '" + product.definition.storeSpecificId + "' is pending.");
-                    return PurchaseProcessingResult.Pending;
-
-                //transaction invalid or failed locally. Complete transaction to not validate again
-                case PurchaseState.Failed: 
-                    DebugLogText(Color.red, "Product purchase '" + product.definition.storeSpecificId + "' deemed as invalid.");
-                    break;
-            }
-
-            //with the transaction finished (without validation) or failed, just call our purchase handler
-            //we just hand over the product id to keep the expected dictionary structure consistent
-            JSONObject resultData = new JSONObject();
-            resultData["data"]["productId"] = product.definition.id;
-            OnPurchaseResult(state == PurchaseState.Purchased, resultData);
-
             return PurchaseProcessingResult.Complete;
         }
 
 
-        //request re-validation of local receipts on the server, in case they do not match.
-        //do not call this on every app launch! This should be manually triggered by the user.
-        public void RestoreTransactions()
-        {
-            if (controller == null)
-            {
-                DebugLogText(Color.yellow, "Unity IAP is not initialized yet.");
-                return;
-            }
-
-            DebugLogText(Color.white, "Trying to restore transactions...");
-
-            #if UNITY_IOS
-			    extensions.GetExtension<IAppleExtensions>().RestoreTransactions((result, message) => { DebugLogText(Color.white, "RestoreTransactions result: " + result + ". Message: " + message); });
-            #else
-                IAPGuard.Instance.RequestRestore();
-            #endif
-        }
 
 
         //fired when Unity IAP failed to initialize.

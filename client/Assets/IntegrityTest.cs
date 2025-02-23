@@ -15,6 +15,9 @@ public class IntegrityTest : MonoBehaviour
     public Button restartBtn2;
     public Button restartBtn3;
     // Start is called before the first frame update
+    
+    
+    
     void Start()
     {
         toastBtn.onClick.AddListener(OnToastMessage);
@@ -24,6 +27,8 @@ public class IntegrityTest : MonoBehaviour
         
         LoggerEx.RegisterLogger(new UnityLogger());
         // ServerClient.Instance.Init();
+        
+        GetComponent<PlayIntegrityManager>().Init();
     }
 
     void OnToastMessage()
@@ -42,30 +47,20 @@ public class IntegrityTest : MonoBehaviour
     
     void OnReStart2BtnClicked()
     {
-        LoggerEx.Debug($"PlayIntegrityManager init -------------");
-        GetComponent<PlayIntegrityManager>().Init();
-    }
-    
-    
-
-    private string GenerateNonce()
-    {
-        byte[] nonceBytes = new byte[32];
-        using (RandomNumberGenerator rng = RandomNumberGenerator.Create())
+        var requestHash = FakeIntegrityVerifierServer.GenerateNonce(42);
+        LoggerEx.Debug($"RequestStandardToken ------------- {requestHash}");
+        GetComponent<PlayIntegrityManager>().RequestStandardToken(requestHash,(success) =>
         {
-            rng.GetBytes(nonceBytes);
-        }
-        // 进行 Base64 URL Safe No Wrap 编码
-        string nonce = Convert.ToBase64String(nonceBytes)
-            .Replace('+', '-')  // URL Safe: 替换 +
-            .Replace('/', '_')  // URL Safe: 替换 /
-            .TrimEnd('=');      // No Wrap: 去除尾部 =
-        return nonce;
+            LoggerEx.Debug($"RequestStandardToken success:{success}");
+        }, failure =>
+        {
+            LoggerEx.Debug($"RequestStandardToken success:{failure}");
+        } );
     }
     
     void OnReStart3BtnClicked()
     {
-        var nonce = GenerateNonce();
+        var nonce = FakeIntegrityVerifierServer.GenerateNonce(42);
         LoggerEx.Debug($"RequestIntegrityToken ------------- {nonce}");
         GetComponent<PlayIntegrityManager>().RequestIntegrityToken(nonce,(success) =>
         {

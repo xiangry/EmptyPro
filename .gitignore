@@ -35,3 +35,4 @@ client/NativeProj/Android/Main/unityLibrary/*
 .DS_Store
 **/.gradle
 client/NativeProj/Nav/unityLibrary
+server/Assets/Resources/kncokheroes-91e3de2ac034.json

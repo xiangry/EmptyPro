@@ -4,17 +4,18 @@ using Framework.Log;
 
 namespace GoogleSdk.Runtime
 {
+    public enum EIntegrityStandEvnState
+    {
+        UnInit = 0,
+        InInit,
+        Error,
+        Valid,
+    }
+
     public class PlayIntegrityManager : MonoBehaviour
     {
         private AndroidJavaObject playIntegrityHelper;
-        private IntegrityCallback integrityCallback;
-
-        public string _callbackFailure;
-        public string _callbackString;
-
-        void Start()
-        {
-        }
+        public EIntegrityStandEvnState standEnvState { get; private set; } = EIntegrityStandEvnState.UnInit;
 
         public void Init()
         {
@@ -26,43 +27,78 @@ namespace GoogleSdk.Runtime
                     playIntegrityHelper = new AndroidJavaObject("com.knockgame.googlesdk.PlayIntegrityHelper", activity);
                 }
 
-                // 传递 C# 监听器到 Java 代码
-                playIntegrityHelper.Call("setIntegrityCallback", new IntegrityCallback(this, OnIntegrityCallbackFailure, OnIntegrityCallbackSuccess));
+                if (playIntegrityHelper == null)
+                {
+                    LoggerEx.Error("Failed to initialize PlayIntegrityHelper.");
+                    return;
+                }
+
+                standEnvState = EIntegrityStandEvnState.InInit;
+                PrepareStandardEnv(
+                    success =>
+                    {
+                        LoggerEx.Debug("Standard prepare success");
+                        standEnvState = EIntegrityStandEvnState.Valid;
+                    },
+                    failure =>
+                    {
+                        LoggerEx.Error("Standard prepare failure: " + failure);
+                        standEnvState = EIntegrityStandEvnState.Error;
+                    });
+            }
+            else
+            {
+                LoggerEx.Error("PlayIntegrityManager is only supported on Android platform.");
             }
         }
 
-        private void OnIntegrityCallbackFailure(string obj)
+        public void PrepareStandardEnv(Action<string> onSuccess, Action<string> onFailure)
         {
-            _callbackFailure = obj;
-            LoggerEx.Debug($"{GoogleSdkSetting.TAG}:OnIntegrityCallbackFailure {obj}");
+            if (playIntegrityHelper == null)
+            {
+                LoggerEx.Error("PlayIntegrityHelper is not initialized.");
+                onFailure?.Invoke("PlayIntegrityHelper is not initialized.");
+                return;
+            }
+
+            var integrityCallback = new IntegrityCallback(onSuccess, onFailure);
+            playIntegrityHelper.Call("prepareStandardEnv", integrityCallback);
         }
 
-        private void OnIntegrityCallbackSuccess(string obj)
+        public void RequestStandardToken(string requestHash, Action<string> onSuccess, Action<string> onFailure)
         {
-            _callbackString = obj;
-            LoggerEx.Debug($"{GoogleSdkSetting.TAG}:OnIntegrityCallbackSuccess {obj}");
+            if (playIntegrityHelper == null)
+            {
+                LoggerEx.Error("PlayIntegrityHelper is not initialized.");
+                onFailure?.Invoke("PlayIntegrityHelper is not initialized.");
+                return;
+            }
+
+            var integrityCallback = new IntegrityCallback(onSuccess, onFailure);
+            playIntegrityHelper.Call("requestStandardToken", requestHash, integrityCallback);
         }
 
         public void RequestIntegrityToken(string nonce, Action<string> onSuccess, Action<string> onFailure)
         {
-            integrityCallback = new IntegrityCallback(this, onSuccess, onFailure);
-            
-            // 传递 C# 监听器到 Java 代码
-            playIntegrityHelper.Call("setIntegrityCallback", integrityCallback);
-            playIntegrityHelper.Call("requestIntegrityToken", nonce);
+            if (playIntegrityHelper == null)
+            {
+                LoggerEx.Error("PlayIntegrityHelper is not initialized.");
+                onFailure?.Invoke("PlayIntegrityHelper is not initialized.");
+                return;
+            }
+
+            var integrityCallback = new IntegrityCallback(onSuccess, onFailure);
+            playIntegrityHelper.Call("requestIntegrityToken", nonce, integrityCallback);
         }
 
-        // Java 回调类
         private class IntegrityCallback : AndroidJavaProxy
         {
-            private PlayIntegrityManager manager;
-            private Action<string> onSuccess;
-            private Action<string> onFailure;
+            private readonly Action<string> onSuccess;
+            private readonly Action<string> onFailure;
 
-            public IntegrityCallback(PlayIntegrityManager manager, Action<string> onSuccess, Action<string> onFailure)
+            public IntegrityCallback(Action<string> onSuccess, Action<string> onFailure)
                 : base("com.knockgame.googlesdk.IntegrityCallback")
             {
-                this.manager = manager;
                 this.onSuccess = onSuccess;
                 this.onFailure = onFailure;
             }
@@ -80,11 +116,10 @@ namespace GoogleSdk.Runtime
             {
                 UnityMainThreadDispatcher.RunOnMainThread(() =>
                 {
-                    LoggerEx.Debug("Integrity check failed: " + errorMessage);
+                    LoggerEx.Error("Integrity check failed: " + errorMessage);
                     onFailure?.Invoke(errorMessage);
                 });
             }
         }
     }
-
 }

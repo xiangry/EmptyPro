@@ -1,0 +1,7 @@
+{
+  "error": {
+    "code": 400,
+    "message": "Integrity token has expired",
+    "status": "INVALID_ARGUMENT"
+  }
+}
